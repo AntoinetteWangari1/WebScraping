@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Search | MyJobMag Scraper</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <div class="max-w-5xl mx-auto mt-10 p-6 bg-white shadow rounded-xl">
+    <h1 class="text-2xl font-bold mb-4 text-center text-blue-600">MyJobMag Job Search</h1>
+
+    <form method="POST" class="flex flex-wrap gap-3 mb-6 justify-center">
+      <input type="text" name="query" placeholder="Search job title..." class="border p-2 rounded w-60">
+      <input type="text" name="location" placeholder="Location..." class="border p-2 rounded w-40">
+      <input type="text" name="field" placeholder="Field..." class="border p-2 rounded w-40">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
+    </form>
+
+    {% if jobs %}
+      <div class="grid gap-4">
+        {% for job in jobs %}
+          <div class="border p-4 rounded-lg shadow-sm hover:shadow-md transition">
+            <h2 class="text-lg font-semibold text-blue-700">{{ job['Job Title & Company'] }}</h2>
+            <p class="text-gray-700">{{ job['Company Info'] }}</p>
+            <p class="text-sm text-gray-500 mb-2">📍 {{ job['Location'] or 'Unknown' }} | 🕒 {{ job['Posted Date'] or 'N/A' }}</p>
+            <p><strong>Field:</strong> {{ job['Field'] or 'N/A' }}</p>
+            <p><strong>Type:</strong> {{ job['Job Type'] or 'N/A' }} | <strong>Experience:</strong> {{ job['Experience'] or 'N/A' }}</p>
+            <p><strong>Salary:</strong> {{ job['Salary Range'] or 'N/A' }}</p>
+            <a href="{{ job['Link'] }}" target="_blank" class="text-blue-600 hover:underline">View Job Details →</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-gray-500 text-center">No jobs found.</p>
+    {% endif %}
+  </div>
+
+</body>
+</html>
